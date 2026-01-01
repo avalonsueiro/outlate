@@ -2,7 +2,7 @@
 
 import { forwardRef, HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'elevated' | 'gradient-border';
@@ -74,10 +74,16 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 Card.displayName = 'Card';
 
 // Motion-enhanced card for animations
-export const MotionCard = forwardRef<
-  HTMLDivElement,
-  CardProps & Omit<HTMLMotionProps<'div'>, keyof CardProps>
->(
+interface MotionCardProps {
+  className?: string;
+  variant?: 'default' | 'elevated' | 'gradient-border';
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  hoverable?: boolean;
+  children?: React.ReactNode;
+  onClick?: () => void;
+}
+
+export const MotionCard = forwardRef<HTMLDivElement, MotionCardProps>(
   (
     {
       className,
@@ -85,7 +91,7 @@ export const MotionCard = forwardRef<
       padding = 'md',
       hoverable = false,
       children,
-      ...props
+      onClick,
     },
     ref
   ) => {
@@ -125,7 +131,7 @@ export const MotionCard = forwardRef<
         )}
         whileHover={hoverable ? { scale: 1.02, y: -2 } : undefined}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        {...props}
+        onClick={onClick}
       >
         {children}
       </motion.div>

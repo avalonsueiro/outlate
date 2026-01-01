@@ -2,7 +2,7 @@
 
 import { forwardRef, ButtonHTMLAttributes } from 'react';
 import { cn } from '@/lib/utils';
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost';
@@ -93,57 +93,69 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button';
 
 // Motion-enhanced button for animations
-export const MotionButton = forwardRef<
-  HTMLButtonElement,
-  ButtonProps & Omit<HTMLMotionProps<'button'>, keyof ButtonProps>
->(({ className, variant = 'primary', size = 'md', isLoading, children, ...props }, ref) => {
-  const baseStyles = cn(
-    'inline-flex items-center justify-center gap-2',
-    'font-heading font-medium',
-    'rounded-xl',
-    'transition-colors duration-200',
-    'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary',
-    'disabled:opacity-50 disabled:cursor-not-allowed'
-  );
+interface MotionButtonProps {
+  className?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  isLoading?: boolean;
+  disabled?: boolean;
+  children?: React.ReactNode;
+  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+}
 
-  const variantStyles = {
-    primary: cn(
-      'bg-accent-orange text-white',
-      'hover:bg-accent-orange-hover',
-      'focus-visible:ring-accent-orange'
-    ),
-    secondary: cn(
-      'bg-accent-purple text-white',
-      'hover:bg-accent-purple-hover',
-      'focus-visible:ring-accent-purple'
-    ),
-    ghost: cn(
-      'bg-transparent text-accent-orange',
-      'border border-accent-purple',
-      'hover:bg-accent-purple-muted',
-      'focus-visible:ring-accent-purple'
-    ),
-  };
+export const MotionButton = forwardRef<HTMLButtonElement, MotionButtonProps>(
+  ({ className, variant = 'primary', size = 'md', isLoading, disabled, children, onClick, type = 'button' }, ref) => {
+    const baseStyles = cn(
+      'inline-flex items-center justify-center gap-2',
+      'font-heading font-medium',
+      'rounded-xl',
+      'transition-colors duration-200',
+      'focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary',
+      'disabled:opacity-50 disabled:cursor-not-allowed'
+    );
 
-  const sizeStyles = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3 text-base',
-    lg: 'px-8 py-4 text-lg',
-  };
+    const variantStyles = {
+      primary: cn(
+        'bg-accent-orange text-white',
+        'hover:bg-accent-orange-hover',
+        'focus-visible:ring-accent-orange'
+      ),
+      secondary: cn(
+        'bg-accent-purple text-white',
+        'hover:bg-accent-purple-hover',
+        'focus-visible:ring-accent-purple'
+      ),
+      ghost: cn(
+        'bg-transparent text-accent-orange',
+        'border border-accent-purple',
+        'hover:bg-accent-purple-muted',
+        'focus-visible:ring-accent-purple'
+      ),
+    };
 
-  return (
-    <motion.button
-      ref={ref}
-      className={cn(baseStyles, variantStyles[variant], sizeStyles[size], className)}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-      {...props}
-    >
-      {isLoading ? <LoadingSpinner size={size} /> : children}
-    </motion.button>
-  );
-});
+    const sizeStyles = {
+      sm: 'px-4 py-2 text-sm',
+      md: 'px-6 py-3 text-base',
+      lg: 'px-8 py-4 text-lg',
+    };
+
+    return (
+      <motion.button
+        ref={ref}
+        type={type}
+        disabled={disabled || isLoading}
+        className={cn(baseStyles, variantStyles[variant], sizeStyles[size], className)}
+        whileHover={disabled ? undefined : { scale: 1.02 }}
+        whileTap={disabled ? undefined : { scale: 0.98 }}
+        transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+        onClick={onClick}
+      >
+        {isLoading ? <LoadingSpinner size={size} /> : children}
+      </motion.button>
+    );
+  }
+);
 
 MotionButton.displayName = 'MotionButton';
 
