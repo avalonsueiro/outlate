@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+/* ============================================
+   OUTLATE DESIGN SYSTEM - DARK MODE ONLY
+   Vibe: Late-night going out with friends
+   ============================================ */
+
+/* Font Faces */
+@font-face {
+  font-family: 'HIMSSANS';
+  src: url('/fonts/hymned_sans.otf') format('opentype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jabour';
+  src: url('/fonts/jabore.otf') format('opentype');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS Variables */
+:root {
+  /* Font Variables */
+  --font-himssans: 'HIMSSANS', sans-serif;
+  --font-jabour: 'Jabour', sans-serif;
+  
+  /* Background Colors */
+  --bg-primary: #0D0D0D;
+  --bg-secondary: #1A1A1A;
+  --bg-tertiary: #252525;
+  
+  /* Accent Colors */
+  --accent-purple: #4F1787;
+  --accent-purple-hover: #6B1FB0;
+  --accent-purple-muted: rgba(79, 23, 135, 0.3);
+  --accent-orange: #FB773C;
+  --accent-orange-hover: #FF8F5A;
+  --accent-orange-muted: rgba(251, 119, 60, 0.3);
+  
+  /* Text Colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --text-muted: #666666;
+  
+  /* Utility Colors */
+  --success: #22C55E;
+  --error: #EF4444;
+  --warning: #F59E0B;
+  
+  /* Borders & Dividers */
+  --border-subtle: #2A2A2A;
+  --border-default: #3A3A3A;
+}
+
+/* Tailwind v4 Theme Configuration */
+@theme inline {
+  /* Colors */
+  --color-background-primary: var(--bg-primary);
+  --color-background-secondary: var(--bg-secondary);
+  --color-background-tertiary: var(--bg-tertiary);
+  
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-purple-hover: var(--accent-purple-hover);
+  --color-accent-purple-muted: var(--accent-purple-muted);
+  --color-accent-orange: var(--accent-orange);
+  --color-accent-orange-hover: var(--accent-orange-hover);
+  --color-accent-orange-muted: var(--accent-orange-muted);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-success: var(--success);
+  --color-error: var(--error);
+  --color-warning: var(--warning);
+  
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  
+  /* Fonts */
+  --font-heading: var(--font-himssans);
+  --font-body: var(--font-jabour);
+  
+  /* Box Shadows */
+  --shadow-glow-purple: 0 0 20px rgba(79, 23, 135, 0.5);
+  --shadow-glow-orange: 0 0 20px rgba(251, 119, 60, 0.5);
+  --shadow-glow-purple-lg: 0 0 40px rgba(79, 23, 135, 0.6);
+  --shadow-glow-orange-lg: 0 0 40px rgba(251, 119, 60, 0.6);
+}
+
+/* Force Dark Mode */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-jabour);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-himssans);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Label styling */
+.label {
+  font-family: var(--font-himssans);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-purple);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-purple-hover);
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--accent-orange);
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: var(--accent-purple-muted);
+  color: var(--text-primary);
+}
+
+/* Utility classes */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--bg-secondary);
+  border-radius: 1rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-orange) 100%);
+  z-index: -1;
+}
+
+/* Animation utilities */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--accent-purple-muted);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--accent-orange-muted);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+/* Backdrop blur utility */
+.backdrop-blur-dark {
+  backdrop-filter: blur(12px);
+  background-color: rgba(13, 13, 13, 0.8);
+}
